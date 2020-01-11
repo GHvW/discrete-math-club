@@ -14,3 +14,4 @@ const Katex = (tex: string) => {
 }
 
 math?.appendChild(Katex("\\forall x (P(x) \\to Q(x))"));
+
