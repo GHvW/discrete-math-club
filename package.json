@@ -1,0 +1,26 @@
+{
+  "name": "discrete-math-club",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GHvW/discrete-math-club.git"
+  },
+  "author": "Garrett van Wageningen <ghvanw283@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GHvW/discrete-math-club/issues"
+  },
+  "homepage": "https://github.com/GHvW/discrete-math-club#readme",
+  "dependencies": {
+    "@types/katex": "^0.11.0",
+    "katex": "^0.11.1"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.4"
+  }
+}
