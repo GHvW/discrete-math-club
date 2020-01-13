@@ -20,6 +20,7 @@
   "homepage": "https://github.com/GHvW/discrete-math-club#readme",
   "dependencies": {
     "@types/katex": "^0.11.0",
+    "bulma": "^0.8.0",
     "katex": "^0.11.1"
   },
   "devDependencies": {

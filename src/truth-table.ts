@@ -1,4 +1,4 @@
-import { Proposition } from "./proposition";
+// import { Proposition } from "./proposition";
 
 const arrgen = <A>({ val, count, arr = []}: { val: A; count: number; arr?: A[]; }): A[] => {
     if (count === 0) {
@@ -31,10 +31,10 @@ const makeTable = (table: boolean[][]) => {
     return table;
 };
 
-const truthTable = (...propositions: Proposition[]) => {
-    const propCount = propositions.length;
-    const start = arrgen({ val: false, count: propCount });
+// const truthTable = (...propositions: Proposition[]) => {
+//     const propCount = propositions.length;
+//     const start = arrgen({ val: false, count: propCount });
 
 
-    return makeTable()
-};
+//     return makeTable()
+// };
