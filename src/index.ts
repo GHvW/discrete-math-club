@@ -1,5 +1,5 @@
 import katex from "katex";
-import { span, div, p, h1, button, section } from "./funcy/ele";
+import { div, p, h1, section } from "./funcy/ele";
 import { conditionals } from "./conditional";
 
 export const Katex = (tex: string) => {
@@ -29,6 +29,18 @@ const Concept = ({ title, tex, note }: Concept) => {
     );
 };
 
+interface SimpleNote {
+    title: string;
+    notes: string[];
+};
+
+const SimpleNote = ({ title, notes }: SimpleNote) => {
+    return div(["class", "box"])(
+        p(["class", "title"])(`${title}`),
+        div()(... notes)
+    )
+};
+
 const HeroBanner = (size: string = "") => (title: string) => {
     return section(["class", "hero"])(
         div(["class", "hero-body"])(
@@ -39,20 +51,20 @@ const HeroBanner = (size: string = "") => (title: string) => {
     )
 };
 
-const HoverList = ({ text, items }: { text: string, items: string[] }) => {
-    return div(["class", "dropdown is-hoverable"])(
-        div(["class", "dropdown-trigger"])(
-            button(["class", "button"], ["aria-haspopup", "true"], ["aria-controls", "dropdown-menu4"])(
-                span()(`${text}`)
-            )
-        ),
-        div(["class", "dropdown-menu"], ["id", "dropdown-menu4"], ["role", "menu"])(
-            div(["class", "dropdown-content"])(
-                ... items
-            )
-        )
-    );
-}
+// const HoverList = ({ text, items }: { text: string, items: string[] }) => {
+//     return div(["class", "dropdown is-hoverable"])(
+//         div(["class", "dropdown-trigger"])(
+//             button(["class", "button"], ["aria-haspopup", "true"], ["aria-controls", "dropdown-menu4"])(
+//                 span()(`${text}`)
+//             )
+//         ),
+//         div(["class", "dropdown-menu"], ["id", "dropdown-menu4"], ["role", "menu"])(
+//             div(["class", "dropdown-content"])(
+//                 ... items
+//             )
+//         )
+//     );
+// }
 
 const Hero = HeroBanner();
 const Hero1 = HeroBanner("is-1");
@@ -65,20 +77,25 @@ const Columns = div(["class", "columns"]);
 const math = document.querySelector("#math");
 
 const list = [
+    Concept({
+        title: "Negation",
+        tex: "\\neg p",
+        note: "A negation is the opposite of the truth value of p"
+    }),
     Concept({ 
         title: "Conjunction", 
         tex: "p \\land q", 
-        note: "A conjunction is true if both p and q are true. Otherwise, it is false" 
+        note: "A conjunction is true if both p and q are true" 
     }),
     Concept({
         title: "Disjunction",
         tex: "p \\lor q",
-        note: "A disjunction is true if both p or q is true."
+        note: "A disjunction is true if both p or q is true"
     }),
     Concept({
         title: "Exclusive Or",
         tex: "p \\otimes q",
-        note: "Exclusive Or is true if p or q is true, but not both."
+        note: "Exclusive Or is true if p or q is true, but not both"
     }),
 ];
 
@@ -91,18 +108,28 @@ if (math?.innerHTML) {
         Columns(...list.map(concept => Column(concept))),
         Hero("Conditionals"),
         Columns(
-            Column(div()(
+            Column(
                 Concept({
                     title: "Conditional",
                     tex: "p \\to q",
-                    note: `A conditional statement is the proposition "if p, then q".\n It is false when p is true and q is false. Otherwise it is true.`
+                    note: `A conditional statement is the proposition "if p, then q".<br>
+                        It is false when p is true and q is false. Otherwise it is true.<br>
+                        <br>
+                        Special conditional statements have their own names:<br>
+                        converse: contapositive, and inverse`
                 }),
                 // HoverList({
                 //     text: "Common ways to express conditional statements",
                 //     items: conditionals("p")("q").map(c => div(["class", "dropdown-item"])(p()(c)))
                 // })
-            ))
-        ),
+            )),
+            Column(
+                SimpleNote({
+                    title: "Common conditional statements",
+                    notes: conditionals("p")("q").map(c => div(["class", "dropdown-item"])(p()(c)))
+                }),
+            ),
+        
         // Columns(
         //     Concept({
         //         title: "Common ways to express conditional statements",
