@@ -13,13 +13,13 @@ export const Katex = (tex: string) => {
 //     return `<h1>${header}</h1><div>${elements}</div>`;
 // };
 
-interface Concept {
+interface ConceptProps {
     title: string;
     tex: string;
     note: string;
 }
 
-const Concept = ({ title, tex, note }: Concept) => {
+const Concept = ({ title, tex, note }: ConceptProps) => {
     return div(["class", "box"])(
         p(["class", "title"])(`${title}`),
         p(["class", "subtitle"])(
@@ -29,14 +29,14 @@ const Concept = ({ title, tex, note }: Concept) => {
     );
 };
 
-interface SimpleNote {
+interface SimpleNoteProps {
     title: string;
     notes: string[];
 };
 
-const SimpleNote = ({ title, notes }: SimpleNote) => {
+const SimpleNote = ({ title, notes }: SimpleNoteProps) => {
     return div(["class", "box"])(
-        p(["class", "title"])(`${title}`),
+        p(["class", "subtitle"])(`${title}`),
         div()(... notes)
     )
 };
@@ -76,6 +76,11 @@ const Columns = div(["class", "columns"]);
 // const start = document.querySelector("#start");
 const math = document.querySelector("#math");
 
+const simpleKatex = (tex: string) => katex.renderToString(tex, {
+    output: "html",
+    throwOnError: true
+});
+
 const list = [
     Concept({
         title: "Negation",
@@ -99,8 +104,6 @@ const list = [
     }),
 ];
 
-// start?.appendChild(Section("Basics"));
-// math?.appendChild(Katex("\\forall x (P(x) \\to Q(x))"));
 
 if (math?.innerHTML) {
     math.innerHTML = div()(
@@ -115,28 +118,22 @@ if (math?.innerHTML) {
                     note: `A conditional statement is the proposition "if p, then q".<br>
                         It is false when p is true and q is false. Otherwise it is true.<br>
                         <br>
-                        Special conditional statements have their own names:<br>
-                        converse: contapositive, and inverse`
+                        Special conditional statements have their own names:<br>`
+                        // converse: ${simpleKatex("q \\to p")}, contapositive: ${simpleKatex("\\neg q \\to \\neg p")}, and inverse: ${simpleKatex("\\neg p \\to \\neg q")}`
                 }),
-                // HoverList({
-                //     text: "Common ways to express conditional statements",
-                //     items: conditionals("p")("q").map(c => div(["class", "dropdown-item"])(p()(c)))
-                // })
-            )),
+                Columns(
+                    Column(SimpleNote({ title: "Converse", notes: [simpleKatex("q \\to p")]})),
+                    Column(SimpleNote({ title: "Contrapositive", notes: [simpleKatex("\\neg q \\to \\neg p")]})),
+                    Column(SimpleNote({ title: "Inverse", notes: [simpleKatex("\\neg p \\to \\neg q")]})),
+                )
+            ),
             Column(
                 SimpleNote({
                     title: "Common conditional statements",
-                    notes: conditionals("p")("q").map(c => div(["class", "dropdown-item"])(p()(c)))
+                    notes: conditionals("p")("q").map(c => p()(c))
                 }),
             ),
-        
-        // Columns(
-        //     Concept({
-        //         title: "Common ways to express conditional statements",
-        //         tex: "",
-        //         note: ul()(...conditionals("p")("q").map(c => li()(c)))
-        //     })
-        // ),
+        )
     );
 } 
     
